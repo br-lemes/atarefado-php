@@ -15,11 +15,11 @@ trait ResponseTrait
         return $response->withHeader('Content-Type', 'application/json');
     }
 
-    public function withValidation($msg, $code = 400)
+    public function withValidation($message, $code = 400)
     {
         $payload = json_encode([
-            'msg' => $msg,
-            'errorCode' => $code
+            'message' => $message,
+            'code' => $code,
         ]);
         $response = (new ResponseFactory)->createResponse($code);
         $response->getBody()->write($payload);

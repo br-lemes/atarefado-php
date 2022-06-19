@@ -18,7 +18,7 @@ $containerBuilder->addDefinitions($containerDefinitions);
 $container = $containerBuilder->build();
 $app = $container->get(App::class);
 
-// require __DIR__ . '/middleware.php';
+require __DIR__ . '/middleware.php';
 require __DIR__ . '/routes.php';
 
 $app->map(
