@@ -20,7 +20,7 @@ return [
             'path' => __DIR__ . '/../../tmp/logs',
             'filename' => 'app.log',
             'level' => Logger::ERROR,
-            'file_permission' => 0775,
+            'file_permission' => 0664,
         ],
         'phinx' => [
             'paths' => [

@@ -13,12 +13,14 @@ class LoggerFactory
 {
     private $path;
     private $level;
+    private $file_permission;
     private $handler = [];
 
     public function __construct(array $settings)
     {
         $this->path = (string)$settings['path'];
         $this->level = (int)$settings['level'];
+        $this->file_permission = $settings['file_permission'];
     }
 
     public function createInstance(string $name): LoggerInterface
@@ -35,9 +37,10 @@ class LoggerFactory
 
     public function addFileHandler(string $filename, int $level = null): self
     {
-        $filename = sprintf('%s/%s', $this->path, $filename);
-        $handler = new RotatingFileHandler($filename, 0, $level ?? $this->level, true, 0777);
-        $handler->setFormatter(new LineFormatter(null, "Y-m-d H:i:s", false, true));
+        $level = $level ?? $this->level;
+        $filename = "{$this->path}/{$filename}";
+        $handler = new RotatingFileHandler($filename, 0, $level, true, $this->file_permission);
+        $handler->setFormatter(new LineFormatter(null, 'Y-m-d H:i:s', false, true));
         $this->handler[] = $handler;
         return $this;
     }
