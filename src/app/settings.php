@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Monolog\Level;
+use Monolog\Logger;
 
 return [
     'settings' => [
@@ -19,7 +19,7 @@ return [
             'name' => 'app',
             'path' => __DIR__ . '/../../tmp/logs',
             'filename' => 'app.log',
-            'level' => Level::Error,
+            'level' => Logger::ERROR,
             'file_permission' => 0775,
         ],
         'phinx' => [

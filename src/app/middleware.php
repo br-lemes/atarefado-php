@@ -1,6 +1,6 @@
 <?php
 
-use Monolog\Level;
+use Monolog\Logger;
 use App\Exception\ValidationException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -27,7 +27,7 @@ $customErrorHandler = function (
         ];
     } else {
         $logger = $container->get(LoggerInterface::class);
-        $logger->log(Level::Error, $exception->getMessage());
+        $logger->log(Logger::ERROR, $exception->getMessage());
         $className = new \ReflectionClass(get_class($exception));
         if ($displayErrorDetails) {
             $data = [
