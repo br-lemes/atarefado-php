@@ -1,0 +1,12 @@
+{
+    "ignoreRegExpList": [
+        // cSpell: disable
+        "'descricao'"
+        // cSpell: enable
+    ],
+    "words": [
+        "sys_usuario",
+        "SysUsuario",
+        "usuario_id"
+    ]
+}

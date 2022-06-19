@@ -1,0 +1,13 @@
+{
+    "ignoreRegExpList": [
+        // cSpell: disable
+        // cSpell: enable
+    ],
+    "words": [
+        "autowire",
+        "awurth",
+        "cnpj",
+        "phinx",
+        "predis"
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "ignoreRegExpList": [
+        // cSpell: disable
+        // cSpell: enable
+    ],
+    "words": [
+        "ansi",
+        "autoload",
+        "awurth",
+        "phinx",
+        "phpdotenv",
+        "phpunit",
+        "robmorgan",
+        "vlucas",
+        "zhangshize"
+    ]
+}
