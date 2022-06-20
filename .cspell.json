@@ -1,6 +1,8 @@
 {
     "ignoreRegExpList": [
         // cSpell: disable
+        "\"modulos/\"",
+        "\\bModulos\\\\"
         // cSpell: enable
     ],
     "words": [

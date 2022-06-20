@@ -1,0 +1,7 @@
+{
+    "cSpell.diagnosticLevel": "Warning",
+    "editor.insertSpaces": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true
+}
