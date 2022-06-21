@@ -1,0 +1,9 @@
+{
+    "ignoreRegExpList": [
+        // cSpell: disable
+        "'America/Cuiaba'"
+        // cSpell: enable
+    ],
+    "words": [
+    ]
+}
