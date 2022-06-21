@@ -29,9 +29,9 @@ class AuthService
         DB::beginTransaction();
         try {
             $user = $this->model->from('sys_usuario as u')
-                ->leftJoin('sys_perfil as s', 's.id', 'u.perfil_id')
+                ->leftJoin('sys_perfil as p', 'p.id', 'u.perfil_id')
                 ->where('u.login', $data['login'])
-                ->select('u.*', 's.nome as perfil_nome', 's.descricao as perfil_descricao')
+                ->select('u.*', 'p.nome as perfil_nome', 'p.descricao as perfil_descricao')
                 ->first();
             if (!$user) {
                 throw new ValidationException('Usuário ou senha incorreta!', 400);
@@ -63,6 +63,23 @@ class AuthService
             ];
         } catch (Exception $ex) {
             DB::rollBack();
+            throw $ex;
+        }
+    }
+
+    public function info($data)
+    {
+        try {
+            $usuario = $this->model->from('sys_usuario as u')
+                ->leftJoin('sys_perfil as p', 'p.id', 'u.perfil_id')
+                ->where('u.id', $data->id)
+                ->select('u.*', 'p.nome as perfil_nome', 'p.descricao as perfil_descricao')
+                ->first();
+            if (!$usuario) {
+                throw new ValidationException('Usuário não encontrado!', 400);
+            }
+            return $usuario;
+        } catch (Exception $ex) {
             throw $ex;
         }
     }

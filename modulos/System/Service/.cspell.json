@@ -1,7 +1,7 @@
 {
     "ignoreRegExpList": [
         // cSpell: disable
-        "s\\.descricao",
+        "p\\.descricao",
         "'usuario'",
         "\\\\Usuario\\b",
         "\\$usuario\\b",
@@ -12,6 +12,7 @@
     "words": [
         "perfil_descricao",
         "sys_usuario",
-        "usuario_id"
+        "usuario_id",
+        "UsuarioService"
     ]
 }

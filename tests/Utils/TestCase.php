@@ -26,7 +26,7 @@ class TestCase extends PHPUnitTestCase
         $containerBuilder->addDefinitions($containerDefinitions);
         $container = $containerBuilder->build();
         $app = $container->get(App::class);
-        // require __DIR__ . '/../../src/app/middleware.php';
+        require __DIR__ . '/../../src/app/middleware.php';
         require __DIR__ . '/../../src/app/routes.php';
         return $app;
     }

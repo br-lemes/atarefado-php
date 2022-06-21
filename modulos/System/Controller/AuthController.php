@@ -42,4 +42,15 @@ class AuthController
             throw $ex;
         }
     }
+
+    public function info(Request $request, Response $response)
+    {
+        try {
+            $usuario = $request->getAttribute('usuario');
+            $data = $this->service->info($usuario);
+            return $this->withJson($data);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
 }
