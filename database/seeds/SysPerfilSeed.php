@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class SysPerfil extends AbstractSeed
+class SysPerfilSeed extends AbstractSeed
 {
     /**
      * Run Method.

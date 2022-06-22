@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class SysUsuario extends AbstractSeed
+class SysUsuarioSeed extends AbstractSeed
 {
     /**
      * Run Method.
