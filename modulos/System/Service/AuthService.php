@@ -34,13 +34,13 @@ class AuthService
                 ->select('u.*', 'p.nome as perfil_nome', 'p.descricao as perfil_descricao')
                 ->first();
             if (!$user) {
-                throw new ValidationException('Usuário ou senha incorreta!', 400);
+                throw new ValidationException('Usuário ou senha incorreta!', 401);
             }
             if ($user->status == 0) {
-                throw new ValidationException('Usuário inativo, entre contato com o suporte!', 400);
+                throw new ValidationException('Usuário inativo, entre contato com o suporte!', 401);
             }
             if (!$user->checkPassword($data)) {
-                throw new ValidationException('Usuário ou senha incorreta!', 400);
+                throw new ValidationException('Usuário ou senha incorreta!', 401);
             }
             $user->hash = time();
             $user->senha = hash('sha512', $data['senha'] . $user->hash);
@@ -69,18 +69,14 @@ class AuthService
 
     public function info($data)
     {
-        try {
-            $usuario = $this->model->from('sys_usuario as u')
-                ->leftJoin('sys_perfil as p', 'p.id', 'u.perfil_id')
-                ->where('u.id', $data->id)
-                ->select('u.*', 'p.nome as perfil_nome', 'p.descricao as perfil_descricao')
-                ->first();
-            if (!$usuario) {
-                throw new ValidationException('Usuário não encontrado!', 400);
-            }
-            return $usuario;
-        } catch (Exception $ex) {
-            throw $ex;
+        $usuario = $this->model->from('sys_usuario as u')
+            ->leftJoin('sys_perfil as p', 'p.id', 'u.perfil_id')
+            ->where('u.id', $data->id)
+            ->select('u.*', 'p.nome as perfil_nome', 'p.descricao as perfil_descricao')
+            ->first();
+        if (!$usuario) {
+            throw new ValidationException('Usuário não encontrado!', 500);
         }
+        return $usuario;
     }
 }
