@@ -1,14 +1,11 @@
 {
     "ignoreRegExpList": [
         // cSpell: disable
-        "'descricao'",
         "\\bModulos\\\\"
         // cSpell: enable
     ],
     "words": [
         "perfil_descricao",
-        "sys_usuario",
-        "SysUsuario",
         "UsuarioData"
     ]
 }

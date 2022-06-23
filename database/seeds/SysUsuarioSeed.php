@@ -1,6 +1,7 @@
 <?php
 
 use Phinx\Seed\AbstractSeed;
+use Modulos\System\Data\UsuarioData;
 
 class SysUsuarioSeed extends AbstractSeed
 {
@@ -15,28 +16,13 @@ class SysUsuarioSeed extends AbstractSeed
     public function run()
     {
         $hash = time();
-        $data = [
-            [
-                'id' => 1,
-                'perfil_id' => 1,
-                'nome' => 'Administrador',
-                'login' => 'admin',
-                'senha' => hash('sha512', 'admin' . $hash),
-                'hash' => $hash,
-                'status' => 1,
-                'token_id' => 1,
-            ],
-            [
-                'id' => 2,
-                'perfil_id' => 2,
-                'nome' => 'Usuário',
-                'login' => 'user',
-                'senha' => hash('sha512', 'user' . $hash),
-                'hash' => $hash,
-                'status' => 1,
-                'token_id' => 1,
-            ],
-        ];
+        $data = UsuarioData::ALL;
+        foreach ($data as &$user) {
+            $user['hash'] = $hash;
+            $user['senha'] = hash('sha512', $user['login'] . $hash);
+            unset($user['perfil_nome']);
+            unset($user['perfil_descricao']);
+        }
         $this->table('sys_usuario')
             ->insert($data)
             ->save();
