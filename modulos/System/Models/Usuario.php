@@ -12,9 +12,6 @@ class Usuario extends BaseModel
 
     public function checkPassword($user)
     {
-        if (!isset($user['senha']) or !isset($this->senha)) {
-            return false;
-        }
         return hash('sha512', $user['senha'] . $this->hash) == $this->senha;
     }
 }

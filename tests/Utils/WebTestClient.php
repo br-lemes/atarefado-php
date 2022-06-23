@@ -2,9 +2,9 @@
 
 namespace Tests\Utils;
 
-use App\Lib\Slim\NRequest;
 use Slim\Psr7\Factory\StreamFactory;
 use Slim\Psr7\Headers;
+use Slim\Psr7\Request;
 use Slim\Psr7\Uri;
 
 class WebTestClient
@@ -100,7 +100,7 @@ class WebTestClient
         $handle = fopen('php://temp', 'w+');
         $stream = (new StreamFactory())->createStreamFromResource($handle);
         $headers = new Headers();
-        $this->request = new NRequest($method, $uri, $headers, [], $serverParams, $stream);
+        $this->request = new Request($method, $uri, $headers, [], $serverParams, $stream);
         $this->request->withQueryParams(['teste' => 'teste']);
         if (isset($params)) {
             $this->request = $this->request->withParsedBody($data);

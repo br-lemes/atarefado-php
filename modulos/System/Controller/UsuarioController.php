@@ -9,7 +9,6 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Modulos\System\Service\UsuarioService;
 use Awurth\SlimValidation\Validator;
-use Exception;
 
 class UsuarioController
 {
@@ -23,23 +22,15 @@ class UsuarioController
 
     public function getAll(Request $request, Response $response)
     {
-        try {
-            $query = $request->getQueryParams();
-            $dados = $this->service->getAll($query);
-            return $this->withJson($dados);
-        } catch (Exception $ex) {
-            throw $ex;
-        }
+        $query = $request->getQueryParams();
+        $dados = $this->service->getAll($query);
+        return $this->withJson($dados);
     }
 
     public function get(Request $request, Response $response)
     {
-        try {
-            $id = $request->getAttribute('id');
-            $usuario = $this->service->get($id);
-            return $this->withJson($usuario);
-        } catch (Exception $ex) {
-            throw $ex;
-        }
+        $id = $request->getAttribute('id');
+        $usuario = $this->service->get($id);
+        return $this->withJson($usuario);
     }
 }

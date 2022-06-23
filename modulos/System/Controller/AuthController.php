@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modulos\System\Controller;
 
-use Exception;
 use App\Lib\ResponseTrait;
 use Awurth\SlimValidation\Validator;
 use Respect\Validation\Validator as V;
@@ -32,25 +31,17 @@ class AuthController
         if (!$this->valid->isValid()) {
             return $this->withJson($this->valid->getErrors(), 400);
         }
-        try {
-            $data = $request->getParsedBody();
-            $data['ip'] = $request->getServerParams()['REMOTE_ADDR'];
-            $data['browser'] = $request->getHeader('User-Agent');
-            $data = $this->service->login($data);
-            return $this->withJson($data);
-        } catch (Exception $ex) {
-            throw $ex;
-        }
+        $data = $request->getParsedBody();
+        $data['ip'] = $request->getServerParams()['REMOTE_ADDR'];
+        $data['browser'] = $request->getHeader('User-Agent');
+        $data = $this->service->login($data);
+        return $this->withJson($data);
     }
 
     public function info(Request $request, Response $response)
     {
-        try {
-            $usuario = $request->getAttribute('usuario');
-            $data = $this->service->info($usuario);
-            return $this->withJson($data);
-        } catch (Exception $ex) {
-            throw $ex;
-        }
+        $usuario = $request->getAttribute('usuario');
+        $data = $this->service->info($usuario);
+        return $this->withJson($data);
     }
 }
