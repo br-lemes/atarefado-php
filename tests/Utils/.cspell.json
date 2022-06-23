@@ -4,6 +4,7 @@
         // cSpell: enable
     ],
     "words": [
+        "phinx",
         "phpunit"
     ]
 }
