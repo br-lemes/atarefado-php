@@ -17,4 +17,14 @@ class WebTestCase extends TestCase
         $this->app = $this->getAppInstance();
         $this->client = new WebTestClient($this->app);
     }
+    protected function login($user)
+    {
+        $this->client->post(
+            '/api/auth/login',
+            ['login' => $user['login'], 'senha' => $user['login']]
+        );
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(200, $this->client->response->getStatusCode());
+        return $data['token_access'];
+    }
 }

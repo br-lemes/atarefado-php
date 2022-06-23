@@ -1,8 +1,13 @@
 {
     "ignoreRegExpList": [
         // cSpell: disable
+        "[/']usuarios?[/']",
+        "\\bModulos\\\\"
         // cSpell: enable
     ],
     "words": [
+        "testUsuarios",
+        "UsuarioControllerTest",
+        "UsuarioData"
     ]
 }
