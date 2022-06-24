@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use \Database\Migration;
+use App\Database\Migration;
 
-final class SysToken extends Migration
+final class SysLog extends Migration
 {
     /**
      * Change Method.
@@ -19,12 +19,14 @@ final class SysToken extends Migration
      */
     public function change(): void
     {
-        $this->table('sys_token', ['signed' => false])
+        $this->table('sys_log', ['signed' => false])
             ->addColumn('usuario_id', 'integer', ['signed' => false])
             ->addColumn('token', 'string', ['limit' => 500, 'null' => true])
             ->addColumn('ip', 'string', ['limit' => 45, 'null' => true])
             ->addColumn('browser', 'string', ['limit' => 200, 'null' => true])
-            ->addColumn('platform', 'string', ['limit' => 50, 'null' => true])
+            ->addColumn('url', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('data', 'text', ['limit' => 'TEXT_LONG', 'null' => true])
+            ->addColumn('http_method', 'string', ['limit' => 50, 'null' => true])
             ->addColumn('created_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'null' => true,
@@ -34,8 +36,6 @@ final class SysToken extends Migration
                 'update' => 'CURRENT_TIMESTAMP',
                 'null' => true,
             ])
-            ->addColumn('token_exp', 'datetime', ['null' => true])
-            ->addColumn('logout_data', 'datetime', ['null' => true])
             ->addIndex('usuario_id')
             ->create();
     }

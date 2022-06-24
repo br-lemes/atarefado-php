@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use \Database\Migration;
+use App\Database\Migration;
 
 final class SysPerfil extends Migration
 {

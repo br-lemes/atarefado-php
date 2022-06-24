@@ -1,6 +1,6 @@
 <?php
 
-namespace Database;
+namespace App\Database;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Phinx\Migration\AbstractMigration;
@@ -14,7 +14,7 @@ class Migration extends AbstractMigration
 
     public function init()
     {
-        $config = (require __DIR__ . '/../src/app/settings.php')['settings'];
+        $config = (require __DIR__ . '/../app/settings.php')['settings'];
 
         $this->capsule = new Capsule();
         $this->capsule->addConnection([

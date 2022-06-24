@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use \Database\Migration;
+use App\Database\Migration;
 
-final class SysUsuario extends Migration
+final class SysToken extends Migration
 {
     /**
      * Change Method.
@@ -19,14 +19,12 @@ final class SysUsuario extends Migration
      */
     public function change(): void
     {
-        $this->table('sys_usuario', ['signed' => false])
-            ->addColumn('perfil_id', 'integer', ['signed' => false])
-            ->addColumn('nome', 'string', ['limit' => 50, 'null' => true])
-            ->addColumn('email', 'string', ['limit' => 255, 'null' => true])
-            ->addColumn('login', 'string', ['limit' => 255])
-            ->addColumn('senha', 'string', ['limit' => 255])
-            ->addColumn('hash', 'string', ['limit' => 32])
-            ->addColumn('status', 'integer', ['default' => 0])
+        $this->table('sys_token', ['signed' => false])
+            ->addColumn('usuario_id', 'integer', ['signed' => false])
+            ->addColumn('token', 'string', ['limit' => 500, 'null' => true])
+            ->addColumn('ip', 'string', ['limit' => 45, 'null' => true])
+            ->addColumn('browser', 'string', ['limit' => 200, 'null' => true])
+            ->addColumn('platform', 'string', ['limit' => 50, 'null' => true])
             ->addColumn('created_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'null' => true,
@@ -36,9 +34,9 @@ final class SysUsuario extends Migration
                 'update' => 'CURRENT_TIMESTAMP',
                 'null' => true,
             ])
-            ->addColumn('token_id', 'integer', ['signed' => false])
-            ->addIndex('perfil_id')
-            ->addIndex('login', ['unique' => true])
+            ->addColumn('token_exp', 'datetime', ['null' => true])
+            ->addColumn('logout_data', 'datetime', ['null' => true])
+            ->addIndex('usuario_id')
             ->create();
     }
 }

@@ -24,10 +24,10 @@ return [
         ],
         'phinx' => [
             'paths' => [
-                'migrations' => __DIR__ . '/../../database/migrations',
-                'seeds' => __DIR__ . '/../../database/seeds',
+                'migrations' => __DIR__ . '/../../modulos/*/Migrations',
+                'seeds' => __DIR__ . '/../../modulos/*/Seeds',
             ],
-            'migration_base_class' => '\Database\Migration',
+            'migration_base_class' => 'App\Database\Migration',
         ],
     ],
 ];
