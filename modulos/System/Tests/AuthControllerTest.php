@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\integration;
+namespace Modulos\System\Tests;
 
 use Tests\Utils\WebTestCase;
 use Modulos\System\Data\UsuarioData;

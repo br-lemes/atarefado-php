@@ -2,6 +2,7 @@
     <testsuites>
         <testsuite name="default">
             <directory>tests</directory>
+            <directory>modulos/*/Tests</directory>
         </testsuite>
     </testsuites>
     <coverage>
@@ -9,5 +10,8 @@
             <directory suffix=".php">src</directory>
             <directory suffix=".php">modulos</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">modulos/*/Tests</directory>
+        </exclude>
     </coverage>
 </phpunit>
