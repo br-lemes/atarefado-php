@@ -9,6 +9,12 @@ use Modulos\System\Data\UsuarioData;
 
 class UsuarioControllerTest extends WebTestCase
 {
+    protected $token;
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->token = $this->login(UsuarioData::ADMIN);
+    }
     public function testUnauthorized()
     {
         $this->client->get('/api/usuarios');
@@ -18,7 +24,7 @@ class UsuarioControllerTest extends WebTestCase
     }
     public function testUsuarios()
     {
-        $this->client->setJwt($this->login(UsuarioData::ADMIN));
+        $this->client->setJwt($this->token);
         $this->client->get('/api/usuarios');
         $data = $this->client->getBodyArray();
         $this->assertEquals(200, $this->client->response->getStatusCode());
@@ -30,7 +36,7 @@ class UsuarioControllerTest extends WebTestCase
     }
     public function testUsuariosOrder()
     {
-        $this->client->setJwt($this->login(UsuarioData::ADMIN));
+        $this->client->setJwt($this->token);
         $this->client->get('/api/usuarios', ['orderBy' => 'id:asc']);
         $data = $this->client->getBodyArray();
         $this->assertEquals(200, $this->client->response->getStatusCode());
@@ -42,7 +48,7 @@ class UsuarioControllerTest extends WebTestCase
     }
     public function testUsuariosOrders()
     {
-        $this->client->setJwt($this->login(UsuarioData::ADMIN));
+        $this->client->setJwt($this->token);
         $this->client->get('/api/usuarios', ['orderBy' => ['perfil_id:desc', 'status']]);
         $data = $this->client->getBodyArray();
         $this->assertEquals(200, $this->client->response->getStatusCode());
@@ -54,7 +60,7 @@ class UsuarioControllerTest extends WebTestCase
     }
     public function testUsuariosDisabled()
     {
-        $this->client->setJwt($this->login(UsuarioData::ADMIN));
+        $this->client->setJwt($this->token);
         $this->client->get('/api/usuarios', ['status' => 0]);
         $data = $this->client->getBodyArray();
         $this->assertEquals(200, $this->client->response->getStatusCode());
@@ -66,7 +72,7 @@ class UsuarioControllerTest extends WebTestCase
     }
     public function testUsuariosId()
     {
-        $this->client->setJwt($this->login(UsuarioData::ADMIN));
+        $this->client->setJwt($this->token);
         $this->client->get('/api/usuarios/1');
         $data = $this->client->getBodyArray();
         $this->assertEquals(200, $this->client->response->getStatusCode());
@@ -76,7 +82,7 @@ class UsuarioControllerTest extends WebTestCase
     }
     public function testUsuariosIds()
     {
-        $this->client->setJwt($this->login(UsuarioData::ADMIN));
+        $this->client->setJwt($this->token);
         $this->client->get('/api/usuarios', ['id' => [1, 3]]);
         $data = $this->client->getBodyArray();
         $this->assertEquals(200, $this->client->response->getStatusCode());
@@ -88,7 +94,7 @@ class UsuarioControllerTest extends WebTestCase
     }
     public function testUsuariosNotFound()
     {
-        $this->client->setJwt($this->login(UsuarioData::ADMIN));
+        $this->client->setJwt($this->token);
         $this->client->get('/api/usuarios/0');
         $this->assertEquals(404, $this->client->response->getStatusCode());
     }
