@@ -2,7 +2,9 @@
     "ignoreRegExpList": [
         // cSpell: disable
         "[/']usuarios?[/']",
-        "\\bModulos\\\\"
+        "\\bModulos\\\\",
+        "\\bUsuario::",
+        "\\Usuario;"
         // cSpell: enable
     ],
     "words": [

@@ -14,15 +14,18 @@ use RuntimeException;
 use DomainException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Modulos\System\Models\Token;
 
 class JwtAuth
 {
+    protected $model;
     protected $secret;
     protected $log;
 
-    public function __construct(Configuration $config, LoggerInterface $log)
+    public function __construct(Configuration $config, LoggerInterface $log, Token $model)
     {
         $this->log = $log;
+        $this->model = $model;
         $this->secret = $config->getString('settings.jwt.secret');
     }
 
@@ -31,11 +34,16 @@ class JwtAuth
         try {
             $token = $this->fetchToken($request);
             $decoded = $this->decodeToken($token);
+            list('data' => $data) = $decoded;
+            $dbToken = $this->model->find($data->tokenId);
+            if (!$dbToken || $dbToken->logout_data || $dbToken->token !== $token) {
+                $this->log->warning('Token inválido.');
+                throw new RuntimeException('Token inválido.');
+            }
         } catch (RuntimeException | DomainException $ex) {
             $response = (new SlimPsr7ResponseFactory)->createResponse(401, '');
             return $response;
         }
-        list('data' => $data) = $decoded;
         $request = $request->withAttribute('token', $token)
             ->withAttribute('usuario', $data);
         $response = $handler->handle($request);
