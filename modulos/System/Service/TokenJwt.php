@@ -37,9 +37,4 @@ class TokenJwt
         $jwtToken = JWT::encode($tokenParam, $this->configJwt['secret'], 'HS256');
         return ['token' => $jwtToken, 'exp' => $tokenParam['exp']];
     }
-
-    public function decode($jwt)
-    {
-        return JWT::decode($jwt, $this->configJwt['secret'], ['HS256']);
-    }
 }
