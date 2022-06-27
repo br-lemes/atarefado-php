@@ -29,20 +29,14 @@ $customErrorHandler = function (
         $logger = $container->get(LoggerInterface::class);
         $logger->log(Logger::ERROR, $exception->getMessage());
         $className = new \ReflectionClass(get_class($exception));
+        $data = [
+            'message' => $exception->getMessage(),
+            'status' => 'error',
+            'code' => $statusCode,
+        ];
         if ($displayErrorDetails) {
-            $data = [
-                'message' => $exception->getMessage(),
-                'class' => $className->getShortName(),
-                'status' => 'error',
-                'code' => $statusCode,
-                'trace' => $exception->getTrace(),
-            ];
-        } else {
-            $data = [
-                'message' => $exception->getMessage(),
-                'status' => 'error',
-                'code' => $statusCode,
-            ];
+            $data['class'] = $className->getShortName();
+            $data['trace'] = $exception->getTrace();
         }
     }
     $response = $app->getResponseFactory()->createResponse();
@@ -50,7 +44,7 @@ $customErrorHandler = function (
     return $response->withStatus($statusCode)->withHeader('Content-type', 'application/json');
 };
 
-$displayError = filter_var(getenv('DISPLAY_ERROR_DETAILS'), FILTER_VALIDATE_BOOLEAN);
+$displayError = filter_var(@$_ENV['DISPLAY_ERROR_DETAILS'], FILTER_VALIDATE_BOOLEAN);
 $errorMiddleware = $app->addErrorMiddleware($displayError, true, true);
 $errorMiddleware->setDefaultErrorHandler($customErrorHandler);
 
