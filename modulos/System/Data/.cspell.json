@@ -1,6 +1,7 @@
 {
     "ignoreRegExpList": [
         // cSpell: disable
+        "'descricao'",
         "\\bModulos\\\\"
         // cSpell: enable
     ],

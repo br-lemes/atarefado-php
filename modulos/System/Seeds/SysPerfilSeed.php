@@ -1,6 +1,7 @@
 <?php
 
 use Phinx\Seed\AbstractSeed;
+use Modulos\System\Data\PerfilData;
 
 class SysPerfilSeed extends AbstractSeed
 {
@@ -14,22 +15,7 @@ class SysPerfilSeed extends AbstractSeed
      */
     public function run()
     {
-        $data = [
-            [
-                'id' => 1,
-                'nome' => 'Administrador',
-                'descricao' => 'Acesso completo ao sistema',
-                'status' => 1,
-                'token_id' => 1,
-            ],
-            [
-                'id' => 2,
-                'nome' => 'Usuário',
-                'descricao' => 'Acesso limitado ao sistema',
-                'status' => 1,
-                'token_id' => 1,
-            ],
-        ];
+        $data = PerfilData::ALL;
         $posts = $this->table('sys_perfil');
         $posts->insert($data)
             ->save();
