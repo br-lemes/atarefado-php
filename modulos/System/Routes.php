@@ -11,5 +11,5 @@ $app->group('/api', function (RouteCollectorProxy $group) {
     $group->get('/auth/info', 'Modulos\System\Controller\AuthController:info');
 
     $group->get('/usuarios', 'Modulos\System\Controller\UsuarioController:getAll');
-    $group->get('/usuarios/{id}', 'Modulos\System\Controller\UsuarioController:get');
+    $group->get('/usuarios/{id:[0-9]+}', 'Modulos\System\Controller\UsuarioController:get');
 })->add('Modulos\System\Middleware\JwtAuth');
