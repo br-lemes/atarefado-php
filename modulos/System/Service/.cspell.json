@@ -1,12 +1,13 @@
 {
     "ignoreRegExpList": [
         // cSpell: disable
-        "p\\.descricao",
+        "'descricao'",
         "'usuario'",
         "\\\\Usuario\\b",
         "\\$usuario\\b",
         "\\bModulos\\\\",
-        "\\bUsuario \\$"
+        "\\bUsuario \\$",
+        "p\\.descricao\\b"
         // cSpell: enable
     ],
     "words": [
