@@ -41,7 +41,7 @@ class AuthController
     public function info(Request $request, Response $response)
     {
         $usuario = $request->getAttribute('usuario');
-        $data = $this->service->info($usuario);
-        return $this->withJson($data);
+        $dados = $this->service->info($usuario);
+        return $this->withJson($dados);
     }
 }

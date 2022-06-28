@@ -30,7 +30,7 @@ class UsuarioController
     public function get(Request $request, Response $response)
     {
         $id = $request->getAttribute('id');
-        $usuario = $this->service->get($id);
-        return $this->withJson($usuario);
+        $dados = $this->service->get($id);
+        return $this->withJson($dados);
     }
 }
