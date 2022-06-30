@@ -3,7 +3,6 @@
 namespace App\Lib;
 
 use Slim\Psr7\Factory\ResponseFactory;
-use Slim\Psr7\Factory\StreamFactory;
 
 trait ResponseTrait
 {

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Modulos\System\Tests;
 
-use Tests\Utils\WebTestCase;
 use Modulos\System\Data\UsuarioData;
+use Psr\Log\LoggerInterface;
+use Tests\Utils\WebTestCase;
 
 class UsuarioControllerTest extends WebTestCase
 {
@@ -94,8 +95,9 @@ class UsuarioControllerTest extends WebTestCase
     }
     public function testUsuariosNotFound()
     {
+        $this->app->getContainer()->get(LoggerInterface::class)->setHandlers([]);
         $this->client->setJwt($this->token);
-        $this->client->get('/api/usuarios/0');
+        $this->client->get('/api/usuarios/1000');
         $this->assertEquals(404, $this->client->response->getStatusCode());
     }
 }
