@@ -26,9 +26,8 @@ return [
     App::class => function (ContainerInterface $container) use ($settings) {
         AppFactory::setContainer($container);
         $app = AppFactory::create();
-        if (isset($settings['settings']['base_path'])) {
-            $app->setBasePath($settings['settings']['base_path']);
-        }
+        $basePath = dirname($_SERVER['SCRIPT_NAME']);
+        $app->setBasePath($basePath != '/' ? $basePath : '');
         return $app;
     },
 
