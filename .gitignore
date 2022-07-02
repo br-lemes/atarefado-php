@@ -3,4 +3,4 @@
 /vendor
 .env
 .phpunit.result.cache
-*.sqlite
+*.sqlite3
