@@ -14,7 +14,7 @@ $app->group('/api', function (RouteCollectorProxy $group) {
     $group->get('/usuarios/{id:[1-9][0-9]*}', 'Modulos\System\Controller\UsuarioController:get');
 
     $group->get('/perfis', 'Modulos\System\Controller\PerfilController:getAll');
-    $group->post('/perfis', 'Modulos\System\Controller\PerfilController:create');
+    $group->post('/perfis', 'Modulos\System\Controller\PerfilController:post');
     $group->get('/perfis/{id:[1-9][0-9]*}', 'Modulos\System\Controller\PerfilController:get');
-    $group->put('/perfis/{id:[1-9][0-9]*}', 'Modulos\System\Controller\PerfilController:update');
+    $group->put('/perfis/{id:[1-9][0-9]*}', 'Modulos\System\Controller\PerfilController:put');
 })->add('Modulos\System\Middleware\JwtAuth');

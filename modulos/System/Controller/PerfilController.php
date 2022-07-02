@@ -36,9 +36,10 @@ class PerfilController
         return $this->withJson($dados);
     }
 
-    public function create(Request $request, Response $response)
+    public function post(Request $request, Response $response)
     {
         $rules = [
+            'id' => V::optional(V::intVal()->min(1)->setName('ID')),
             'nome' => V::notBlank()->setName('Nome'),
             'descricao' => V::notBlank()->setName('Descrição'),
             'status' => V::optional(V::in(['0', '1'])->setName('Status')),
@@ -46,7 +47,7 @@ class PerfilController
         return $this->createOrUpdate($request, $response, $rules);
     }
 
-    public function update(Request $request, Response $response)
+    public function put(Request $request, Response $response)
     {
         $rules = [
             'status' => V::optional(V::in(['0', '1'])->setName('Status')),
