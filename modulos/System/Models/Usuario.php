@@ -7,7 +7,7 @@ use App\Models\BaseModel;
 class Usuario extends BaseModel
 {
     protected $table = 'sys_usuario';
-    protected $fillable = ['perfil_id', 'nome', 'email', 'login', 'senha', 'hash', 'status'];
+    protected $fillable = ['perfil_id', 'nome', 'email', 'login', 'status'];
     protected $hidden = ['senha', 'hash'];
 
     public function checkPassword($user)
