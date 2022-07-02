@@ -27,6 +27,9 @@ return [
         AppFactory::setContainer($container);
         $app = AppFactory::create();
         $basePath = dirname($_SERVER['SCRIPT_NAME']);
+        if (defined('PHPUNIT_COMPOSER_INSTALL') || defined('__PHPUNIT_PHAR__')) {
+            $basePath = '/';
+        }
         $app->setBasePath($basePath != '/' ? $basePath : '');
         return $app;
     },

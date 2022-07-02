@@ -9,6 +9,6 @@
         "awurth",
         "cnpj",
         "phinx",
-        "predis"
+        "phpunit"
     ]
 }
