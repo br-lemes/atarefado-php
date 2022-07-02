@@ -44,6 +44,9 @@ class PerfilService
     {
         try {
             DB::beginTransaction();
+            if (!$id && isset($data['id'])) {
+                $id = $data['id'];
+            }
             if ($id) {
                 $save = $this->model->find($id);
                 if (!$save) {

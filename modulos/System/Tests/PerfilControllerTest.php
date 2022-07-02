@@ -141,4 +141,28 @@ class PerfilControllerTest extends WebTestCase
             'token_id' => 1,
         ], $data);
     }
+    public function testPerfisUpdatePost()
+    {
+        $this->client->setJwt($this->token);
+        $this->client->post(
+            '/api/perfis',
+            [
+                'id' => 1,
+                'nome' => 'Administrador',
+                'descricao' => 'Acesso completo ao sistema',
+                'status' => 0,
+            ]
+        );
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(200, $this->client->response->getStatusCode());
+        unset($data['created_at']);
+        unset($data['updated_at']);
+        $this->assertEquals([
+            'id' => 1,
+            'nome' => 'Administrador',
+            'descricao' => 'Acesso completo ao sistema',
+            'status' => 0,
+            'token_id' => 1,
+        ], $data);
+    }
 }
