@@ -9,6 +9,7 @@
         // cSpell: enable
     ],
     "words": [
+        "phpunit",
         "testUsuarios",
         "UsuarioControllerTest",
         "UsuarioData"

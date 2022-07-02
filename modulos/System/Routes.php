@@ -11,7 +11,9 @@ $app->group('/api', function (RouteCollectorProxy $group) {
     $group->get('/auth/info', 'Modulos\System\Controller\AuthController:info');
 
     $group->get('/usuarios', 'Modulos\System\Controller\UsuarioController:getAll');
+    $group->post('/usuarios', 'Modulos\System\Controller\UsuarioController:post');
     $group->get('/usuarios/{id:[1-9][0-9]*}', 'Modulos\System\Controller\UsuarioController:get');
+    $group->put('/usuarios/{id:[1-9][0-9]*}', 'Modulos\System\Controller\UsuarioController:put');
 
     $group->get('/perfis', 'Modulos\System\Controller\PerfilController:getAll');
     $group->post('/perfis', 'Modulos\System\Controller\PerfilController:post');
