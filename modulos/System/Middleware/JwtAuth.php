@@ -2,19 +2,19 @@
 
 namespace Modulos\System\Middleware;
 
+use DomainException;
+use Exception;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Modulos\System\Models\Token;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use Slim\Psr7\Factory\ResponseFactory as SlimPsr7ResponseFactory;
-use Selective\Config\Configuration;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-use Exception;
-use RuntimeException;
-use DomainException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Modulos\System\Models\Token;
+use RuntimeException;
+use Selective\Config\Configuration;
+use Slim\Psr7\Factory\ResponseFactory as SlimPsr7ResponseFactory;
 
 class JwtAuth
 {

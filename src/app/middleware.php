@@ -1,7 +1,7 @@
 <?php
 
-use Monolog\Logger;
 use App\Exception\ValidationException;
+use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 

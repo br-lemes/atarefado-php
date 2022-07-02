@@ -1,7 +1,7 @@
 <?php
 
-use Selective\Config\Configuration;
 use Illuminate\Database\Capsule\Manager as DB;
+use Selective\Config\Configuration;
 
 $app = require __DIR__ . '/../app/app.php';
 

@@ -1,7 +1,7 @@
 <?php
 
-use Phinx\Seed\AbstractSeed;
 use Modulos\System\Data\UsuarioData;
+use Phinx\Seed\AbstractSeed;
 
 class SysUsuarioSeed extends AbstractSeed
 {

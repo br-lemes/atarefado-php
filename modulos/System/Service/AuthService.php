@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Modulos\System\Service;
 
-use Exception;
 use App\Exception\ValidationException;
-use Modulos\System\Models\Usuario;
-use Modulos\System\Models\Token;
-use Modulos\System\Service\TokenJwt;
+use Exception;
 use Illuminate\Database\Capsule\Manager as DB;
+use Modulos\System\Models\Token;
+use Modulos\System\Models\Usuario;
+use Modulos\System\Service\TokenJwt;
 use Psr\Log\LoggerInterface;
 
 class AuthService

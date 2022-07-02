@@ -1,14 +1,14 @@
 <?php
 
-use Psr\Container\ContainerInterface;
-use Selective\Config\Configuration;
+use App\Factory\LoggerFactory;
+use App\Service\System\AuthService;
+use Awurth\SlimValidation\Validator;
 use Illuminate\Database\Capsule\Manager as DB;
+use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+use Selective\Config\Configuration;
 use Slim\App;
 use Slim\Factory\AppFactory;
-use App\Factory\LoggerFactory;
-use Psr\Log\LoggerInterface;
-use Awurth\SlimValidation\Validator;
-use App\Service\System\AuthService;
 
 $settings = require __DIR__ . '/settings.php';
 

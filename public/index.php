@@ -3,12 +3,12 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Slim\Psr7\Cookies;
+use Slim\Psr7\Factory\StreamFactory;
+use Slim\Psr7\Factory\UriFactory;
 use Slim\Psr7\Headers;
 use Slim\Psr7\Request;
 use Slim\Psr7\Stream;
 use Slim\Psr7\UploadedFile;
-use Slim\Psr7\Factory\UriFactory;
-use Slim\Psr7\Factory\StreamFactory;
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 

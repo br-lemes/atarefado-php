@@ -6,10 +6,11 @@ namespace Modulos\System\Controller;
 
 use App\Lib\ResponseTrait;
 use Awurth\SlimValidation\Validator;
-use Respect\Validation\Validator as V;
+use Exception;
+use Modulos\System\Service\AuthService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Modulos\System\Service\AuthService;
+use Respect\Validation\Validator as V;
 
 class AuthController
 {

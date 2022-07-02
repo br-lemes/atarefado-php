@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Modulos\System\Tests;
 
-use Tests\Utils\WebTestCase;
 use Modulos\System\Data\UsuarioData;
 use Modulos\System\Models\Token;
 use Modulos\System\Models\Usuario;
+use Tests\Utils\WebTestCase;
 
 class AuthControllerTest extends WebTestCase
 {

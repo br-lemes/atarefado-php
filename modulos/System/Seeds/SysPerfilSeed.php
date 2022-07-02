@@ -1,7 +1,7 @@
 <?php
 
-use Phinx\Seed\AbstractSeed;
 use Modulos\System\Data\PerfilData;
+use Phinx\Seed\AbstractSeed;
 
 class SysPerfilSeed extends AbstractSeed
 {

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Utils;
 
+use DI\ContainerBuilder;
+use Phinx\Config\Config;
+use Phinx\Migration\Manager;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use Slim\App;
 use Slim\Psr7\Factory\StreamFactory;
 use Slim\Psr7\Headers;
 use Slim\Psr7\Request as SlimRequest;
 use Slim\Psr7\Uri;
-use DI\ContainerBuilder;
-use Slim\App;
-use Phinx\Config\Config;
-use Phinx\Migration\Manager;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 

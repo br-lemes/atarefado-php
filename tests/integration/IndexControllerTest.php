@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\integration;
 
-use Tests\Utils\WebTestCase;
 use Psr\Log\LoggerInterface;
+use Tests\Utils\WebTestCase;
 
 class IndexControllerTest extends WebTestCase
 {
