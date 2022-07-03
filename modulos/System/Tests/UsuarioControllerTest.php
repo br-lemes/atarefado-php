@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modulos\System\Tests;
 
 use Modulos\System\Data\UsuarioData;
+use Modulos\System\Models\Usuario;
 use Psr\Log\LoggerInterface;
 use Tests\Utils\WebTestCase;
 
@@ -256,5 +257,41 @@ class UsuarioControllerTest extends WebTestCase
             'message' => 'Já existe usuário com este e-mail!',
             'code' => 400,
         ], $data);
+    }
+    public function testUsuariosUser()
+    {
+        $token = $this->login(UsuarioData::USER);
+        $this->client->setJwt($token);
+        $this->client->get('/api/usuarios');
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(200, $this->client->response->getStatusCode());
+        foreach ($data as $key => $value) {
+            unset($data[$key]['created_at']);
+            unset($data[$key]['updated_at']);
+        }
+        $this->assertEquals([UsuarioData::USER], $data);
+        $this->client->put('/api/usuarios/2', ['status' => 0]);
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(200, $this->client->response->getStatusCode());
+        unset($data['created_at']);
+        unset($data['updated_at']);
+        $this->assertEquals([
+            'id' => 2,
+            'perfil_id' => 2,
+            'nome' => 'Usuário',
+            'login' => 'user',
+            'email' => 'user@localhost',
+            'status' => 0,
+            'token_id' => 1,
+        ], $data);
+        $this->app->getContainer()->get(LoggerInterface::class)->setHandlers([]);
+        $this->client->get('/api/usuarios/1');
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(401, $this->client->response->getStatusCode());
+        $this->assertEquals(['message' => 'Não autorizado!', 'code' => 401], $data);
+        $this->client->put('/api/usuarios/1', ['status' => 0]);
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(401, $this->client->response->getStatusCode());
+        $this->assertEquals(['message' => 'Não autorizado!', 'code' => 401], $data);
     }
 }

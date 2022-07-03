@@ -24,15 +24,17 @@ class UsuarioController
 
     public function getAll(Request $request, Response $response)
     {
+        $usuario = $request->getAttribute('usuario');
         $query = $request->getQueryParams();
-        $dados = $this->service->getAll($query);
+        $dados = $this->service->getAll($usuario, $query);
         return $this->withJson($dados);
     }
 
     public function get(Request $request, Response $response)
     {
+        $usuario = $request->getAttribute('usuario');
         $id = $request->getAttribute('id');
-        $dados = $this->service->get($id);
+        $dados = $this->service->get($usuario, $id);
         return $this->withJson($dados);
     }
 

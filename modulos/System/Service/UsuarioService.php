@@ -18,7 +18,7 @@ class UsuarioService
         $this->model = $model;
     }
 
-    public function getAll($query)
+    public function getAll($usuario, $query)
     {
         $fieldMap = [
             'id' => 'u.id',
@@ -35,13 +35,19 @@ class UsuarioService
             ->whereMap($query, $fieldMap)
             ->orderMap($query, $fieldMap)
             ->select('u.*', 'p.nome as perfil_nome', 'p.descricao as perfil_descricao');
+        if ($usuario->perfilId != 1) {
+            $queryBuilder->where('u.id', $usuario->id);
+        }
         return $queryBuilder->get();
     }
 
-    public function get($id)
+    public function get($usuario, $id)
     {
-        $dados = $this->getAll(['id' => $id])->toArray();
+        $dados = $this->getAll($usuario, ['id' => $id])->toArray();
         if (!$dados) {
+            if ($usuario->perfilId != 1) {
+                throw new ValidationException('Não autorizado!', 401);
+            }
             throw new ValidationException('Usuário não encontrado!', 404);
         }
         return $dados[0];
@@ -53,6 +59,9 @@ class UsuarioService
             DB::beginTransaction();
             if (!$id && isset($data['id'])) {
                 $id = $data['id'];
+            }
+            if ($usuario->perfilId != 1 && $id != $usuario->id) {
+                throw new ValidationException('Não autorizado!', 401);
             }
             if ($id) {
                 $save = $this->model->find($id);
