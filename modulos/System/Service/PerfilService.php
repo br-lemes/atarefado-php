@@ -18,7 +18,7 @@ class PerfilService
         $this->model = $model;
     }
 
-    public function getAll($query)
+    public function getAll($usuario, $query)
     {
         $fieldMap = [
             'id' => 'id',
@@ -28,13 +28,19 @@ class PerfilService
         ];
         $queryBuilder = $this->model->whereMap($query, $fieldMap)
             ->orderMap($query, $fieldMap);
+        if ($usuario->perfilId != 1) {
+            $queryBuilder->where('id', $usuario->perfilId);
+        }
         return $queryBuilder->get();
     }
 
-    public function get($id)
+    public function get($usuario, $id)
     {
-        $dados = $this->getAll(['id' => $id])->toArray();
+        $dados = $this->getAll($usuario, ['id' => $id])->toArray();
         if (!$dados) {
+            if ($usuario->perfilId != 1) {
+                throw new ValidationException('Não autorizado!', 401);
+            }
             throw new ValidationException('Perfil não encontrado!', 404);
         }
         return $dados[0];

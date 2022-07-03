@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modulos\System\Controller;
 
+use App\Exception\ValidationException;
 use App\Lib\ResponseTrait;
 use Awurth\SlimValidation\Validator;
 use Exception;
@@ -24,15 +25,17 @@ class PerfilController
 
     public function getAll(Request $request, Response $response)
     {
+        $usuario = $request->getAttribute('usuario');
         $query = $request->getQueryParams();
-        $dados = $this->service->getAll($query);
+        $dados = $this->service->getAll($usuario, $query);
         return $this->withJson($dados);
     }
 
     public function get(Request $request, Response $response)
     {
+        $usuario = $request->getAttribute('usuario');
         $id = $request->getAttribute('id');
-        $dados = $this->service->get($id);
+        $dados = $this->service->get($usuario, $id);
         return $this->withJson($dados);
     }
 
@@ -63,6 +66,9 @@ class PerfilController
         }
         try {
             $usuario = $request->getAttribute('usuario');
+            if ($usuario->perfilId != 1) {
+                throw new ValidationException('Não autorizado!', 401);
+            }
             $data = $request->getParsedBody();
             $id = $request->getAttribute('id');
             $dados = $this->service->createOrUpdate($usuario, $data, $id);

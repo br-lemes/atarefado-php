@@ -6,6 +6,7 @@ namespace Modulos\System\Tests;
 
 use Modulos\System\Data\PerfilData;
 use Modulos\System\Data\UsuarioData;
+use Modulos\System\Models\Usuario;
 use Psr\Log\LoggerInterface;
 use Tests\Utils\WebTestCase;
 
@@ -164,5 +165,27 @@ class PerfilControllerTest extends WebTestCase
             'status' => 0,
             'token_id' => 1,
         ], $data);
+    }
+    public function testPerfisUser()
+    {
+        $token = $this->login(UsuarioData::USER);
+        $this->client->setJwt($token);
+        $this->client->get('/api/perfis');
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(200, $this->client->response->getStatusCode());
+        foreach ($data as $key => $value) {
+            unset($data[$key]['created_at']);
+            unset($data[$key]['updated_at']);
+        }
+        $this->assertEquals([PerfilData::USER], $data);
+        $this->app->getContainer()->get(LoggerInterface::class)->setHandlers([]);
+        $this->client->get('/api/perfis/1');
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(401, $this->client->response->getStatusCode());
+        $this->assertEquals(['message' => 'Não autorizado!', 'code' => 401], $data);
+        $this->client->put('/api/perfis/1', ['status' => 0]);
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(401, $this->client->response->getStatusCode());
+        $this->assertEquals(['message' => 'Não autorizado!', 'code' => 401], $data);
     }
 }
