@@ -21,10 +21,10 @@ final class SysToken extends Migration
     {
         $this->table('sys_token', ['signed' => false])
             ->addColumn('usuario_id', 'integer', ['signed' => false])
-            ->addColumn('token', 'string', ['limit' => 500, 'null' => true])
+            ->addColumn('token_access', 'string', ['limit' => 500, 'null' => true])
+            ->addColumn('token_refresh', 'string', ['limit' => 500, 'null' => true])
             ->addColumn('ip', 'string', ['limit' => 45, 'null' => true])
             ->addColumn('browser', 'string', ['limit' => 200, 'null' => true])
-            ->addColumn('platform', 'string', ['limit' => 50, 'null' => true])
             ->addColumn('created_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'null' => true,
@@ -35,7 +35,8 @@ final class SysToken extends Migration
                 'null' => true,
             ])
             ->addColumn('token_exp', 'datetime', ['null' => true])
-            ->addColumn('logout_data', 'datetime', ['null' => true])
+            ->addColumn('logout_date', 'datetime', ['null' => true])
+            ->addColumn('logout_user', 'integer', ['signed' => false, 'null' => true])
             ->addIndex('usuario_id')
             ->create();
     }

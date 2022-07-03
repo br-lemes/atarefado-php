@@ -7,7 +7,6 @@ namespace Modulos\System\Service;
 use App\Exception\ValidationException;
 use Exception;
 use Illuminate\Database\Capsule\Manager as DB;
-use Modulos\System\Models\Token;
 use Modulos\System\Models\Usuario;
 use Modulos\System\Service\TokenJwt;
 use Psr\Log\LoggerInterface;
@@ -42,23 +41,11 @@ class AuthService
             if (!$user->checkPassword($data)) {
                 throw new ValidationException('Usuário ou senha incorreta!', 401);
             }
-            $user->hash = time();
-            $user->senha = hash('sha512', $data['senha'] . $user->hash);
-            $user->save();
-            $token = new Token();
-            $token->usuario_id = $user->id;
-            $token->ip = $data['ip'];
-            $token->browser = json_encode($data['browser']);
-            $token->save();
-            $data = ['id' => $user->id, 'perfilId' => $user->perfil_id, 'tokenId' => $token->id];
-            $tokenRefresh = $this->jwt->encodeRefresh($data);
-            $token->token = $tokenRefresh['token'];
-            $token->token_exp = gmdate('Y-m-d H:i:s', $tokenRefresh['exp']);
-            $token->save();
+            $token = $this->jwt->create($user, $data);
             DB::commit();
             return [
-                'token_access' => $this->jwt->encodeAccess($data),
-                'token_refresh' => $tokenRefresh['token'],
+                'token_access' => $token->token_access,
+                'token_refresh' => $token->token_refresh,
                 'usuario' => $user->toArray(),
             ];
         } catch (Exception $ex) {
