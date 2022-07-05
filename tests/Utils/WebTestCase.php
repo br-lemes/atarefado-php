@@ -12,6 +12,8 @@ class WebTestCase extends TestCase
     /** @var \Tests\Utils\WebTestClient */
     protected $client;
 
+    protected $info;
+
     protected function setUp(): void
     {
         $this->app = $this->getAppInstance();
@@ -25,6 +27,7 @@ class WebTestCase extends TestCase
         );
         $data = $this->client->getBodyArray();
         $this->assertEquals(200, $this->client->response->getStatusCode());
+        $this->info[$user['login']] = $data;
         return $data['token_access'];
     }
 }

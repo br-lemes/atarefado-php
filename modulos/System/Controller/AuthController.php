@@ -45,4 +45,18 @@ class AuthController
         $dados = $this->service->info($usuario);
         return $this->withJson($dados);
     }
+
+    public function refresh(Request $request, Response $response)
+    {
+        $rules = [
+            'token_refresh' => V::notBlank()->setName('Token Refresh'),
+        ];
+        $this->valid->validate($request, $rules);
+        if (!$this->valid->isValid()) {
+            return $this->withJson($this->valid->getErrors(), 400);
+        }
+        $data = $request->getParsedBody();
+        $data = $this->service->refresh($data['token_refresh']);
+        return $this->withJson($data);
+    }
 }

@@ -53,12 +53,26 @@ class TokenJwt
         return $save;
     }
 
-    public function getValid($token)
+    public function refresh($token_refresh)
     {
-        $decoded = JWT::decode($token, new Key($this->configJwt['secret'], 'HS256'));
+        $decoded = JWT::decode($token_refresh, new Key($this->configJwt['secret'], 'HS256'));
         $data = $decoded->data;
         $dbToken = $this->model->find($data->tokenId);
-        if (!$dbToken || $dbToken->logout_date || $dbToken->token_access != $token) {
+        if (!$dbToken || $dbToken->logout_date || $dbToken->token_refresh != $token_refresh) {
+            return false;
+        }
+        $tokenAccess = $this->encode($data, $this->configJwt['exp_sec_access']);
+        $dbToken->token_access = $tokenAccess['token'];
+        $dbToken->save();
+        return $dbToken->token_access;
+    }
+
+    public function getValid($token_access)
+    {
+        $decoded = JWT::decode($token_access, new Key($this->configJwt['secret'], 'HS256'));
+        $data = $decoded->data;
+        $dbToken = $this->model->find($data->tokenId);
+        if (!$dbToken || $dbToken->logout_date || $dbToken->token_access != $token_access) {
             return false;
         }
         return $data;

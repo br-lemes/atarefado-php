@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Modulos\System\Service;
 
 use App\Exception\ValidationException;
+use DomainException;
 use Exception;
 use Illuminate\Database\Capsule\Manager as DB;
 use Modulos\System\Models\Usuario;
 use Modulos\System\Service\TokenJwt;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 
 class AuthService
 {
@@ -65,5 +67,18 @@ class AuthService
             throw new ValidationException('Usuário não encontrado!', 500);
         }
         return $usuario;
+    }
+
+    public function refresh($token_refresh)
+    {
+        try {
+            $token_access = $this->jwt->refresh($token_refresh);
+            if (!$token_access) {
+                throw new ValidationException('Não foi possível atualizar o token!', 401);
+            }
+            return ['token_access' => $token_access];
+        } catch (RuntimeException | DomainException $ex) {
+            throw new ValidationException('Não foi possível atualizar o token!', 401);
+        }
     }
 }

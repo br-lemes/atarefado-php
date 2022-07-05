@@ -99,4 +99,42 @@ class AuthControllerTest extends WebTestCase
         $this->client->get('/api/auth/info');
         $this->assertEquals(401, $this->client->response->getStatusCode());
     }
+    public function testRefreshParam()
+    {
+        $this->client->post('/api/auth/refresh');
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(400, $this->client->response->getStatusCode());
+        $this->assertEquals(['token_refresh' => ['notBlank' => 'O campo Token Refresh é obrigatório.']], $data);
+    }
+    public function testRefreshNotAToken()
+    {
+        $this->client->post('/api/auth/refresh', ['token_refresh' => 'invalid']);
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(401, $this->client->response->getStatusCode());
+        $this->assertEquals(
+            ['message' => 'Não foi possível atualizar o token!', 'code' => 401],
+            $data
+        );
+    }
+    public function testRefreshInvalidToken()
+    {
+        $this->client->post('/api/auth/refresh', ['token_refresh' => $this->token]);
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(401, $this->client->response->getStatusCode());
+        $this->assertEquals(
+            ['message' => 'Não foi possível atualizar o token!', 'code' => 401],
+            $data
+        );
+    }
+    public function testRefresh()
+    {
+        $this->client->post(
+            '/api/auth/refresh',
+            ['token_refresh' => $this->info['admin']['token_refresh']]
+        );
+        $data = $this->client->getBodyArray();
+        $this->assertEquals(200, $this->client->response->getStatusCode());
+        $this->assertEquals(1, count($data));
+        // TODO: token antigo não deve autenticar e token novo deve
+    }
 }
