@@ -9,7 +9,7 @@ use Tests\Utils\WebTestCase;
 
 class IndexControllerTest extends WebTestCase
 {
-    public function testIndex()
+    private function index()
     {
         $this->client->get('/');
         $data = $this->client->getBodyArray();
@@ -18,16 +18,15 @@ class IndexControllerTest extends WebTestCase
             'message' => 'Hello, World!',
         ], $data);
     }
-    public function testOptions()
+    private function options()
     {
         $this->client->options('*');
         $data = $this->client->getBodyArray();
         $this->assertEquals(200, $this->client->response->getStatusCode());
         $this->assertEquals(null, $data);
     }
-    public function testNotFound()
+    private function notFound()
     {
-        $this->app->getContainer()->get(LoggerInterface::class)->setHandlers([]);
         $this->client->get('/not-found');
         $data = $this->client->getBodyArray();
         $this->assertEquals(404, $this->client->response->getStatusCode());
@@ -38,5 +37,12 @@ class IndexControllerTest extends WebTestCase
             'code' => 404,
             'class' => 'HttpNotFoundException',
         ], $data);
+    }
+    public function testIndex()
+    {
+        $this->index();
+        $this->options();
+        $this->app->getContainer()->get(LoggerInterface::class)->setHandlers([]);
+        $this->notFound();
     }
 }
