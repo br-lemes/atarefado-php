@@ -9,8 +9,15 @@
         // cSpell: enable
     ],
     "words": [
+        "createUsuario",
+        "getUsuario",
+        "perfil_descricao",
         "phpunit",
+        "testCreateUsuario",
+        "testGetUsuario",
+        "testUpdateUsuario",
         "testUsuarios",
+        "updateUsuario",
         "UsuarioControllerTest",
         "UsuarioData"
     ]

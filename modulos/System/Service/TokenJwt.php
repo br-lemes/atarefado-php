@@ -67,6 +67,26 @@ class TokenJwt
         return $dbToken->token_access;
     }
 
+    public function logout($usuario, $tokenId)
+    {
+        // print_r([$usuario, $tokenId]);
+        if ($tokenId) {
+            $dbToken = $this->model->find($tokenId);
+        } else {
+            $dbToken = $this->model->find($usuario->tokenId);
+        }
+        if (!$dbToken || $dbToken->logout_date) {
+            return false;
+        }
+        if ($usuario->perfilId != 1 && $dbToken->usuario_id != $usuario->id) {
+            return false;
+        }
+        $dbToken->logout_date = gmdate('Y-m-d H:i:s');
+        $dbToken->logout_token = $usuario->tokenId;
+        $dbToken->save();
+        return true;
+    }
+
     public function getValid($token_access)
     {
         $decoded = JWT::decode($token_access, new Key($this->configJwt['secret'], 'HS256'));

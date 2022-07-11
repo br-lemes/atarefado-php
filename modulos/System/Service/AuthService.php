@@ -46,6 +46,7 @@ class AuthService
             $token = $this->jwt->create($user, $data);
             DB::commit();
             return [
+                'token_id' => $token->id,
                 'token_access' => $token->token_access,
                 'token_refresh' => $token->token_refresh,
                 'usuario' => $user->toArray(),
@@ -80,5 +81,13 @@ class AuthService
         } catch (RuntimeException | DomainException $ex) {
             throw new ValidationException('Não foi possível atualizar o token!', 401);
         }
+    }
+
+    public function logout($usuario, $tokenId)
+    {
+        if (!$this->jwt->logout($usuario, $tokenId)) {
+            throw new ValidationException('Não foi possível fazer logout!', 400);
+        }
+        return true;
     }
 }

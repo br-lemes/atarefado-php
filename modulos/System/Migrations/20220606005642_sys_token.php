@@ -36,7 +36,7 @@ final class SysToken extends Migration
             ])
             ->addColumn('token_exp', 'datetime', ['null' => true])
             ->addColumn('logout_date', 'datetime', ['null' => true])
-            ->addColumn('logout_user', 'integer', ['signed' => false, 'null' => true])
+            ->addColumn('logout_token', 'integer', ['signed' => false, 'null' => true])
             ->addIndex('usuario_id')
             ->create();
     }

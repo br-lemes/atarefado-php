@@ -16,7 +16,7 @@ class LoginTest extends WebTestCase
 
         $this->assertEquals($code, $this->client->response->getStatusCode());
         if ($code == 200) {
-            $this->assertEquals(3, count($data));
+            $this->assertEquals(4, count($data));
             unset($data['usuario']['created_at']);
             unset($data['usuario']['updated_at']);
             $this->assertEquals($info, $data['usuario']);

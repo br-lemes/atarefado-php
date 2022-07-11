@@ -9,6 +9,7 @@ $app->post('/api/auth/refresh', 'Modulos\System\Controller\AuthController:refres
 
 $app->group('/api', function (RouteCollectorProxy $group) {
     $group->get('/auth/info', 'Modulos\System\Controller\AuthController:info');
+    $group->post('/auth/logout', 'Modulos\System\Controller\AuthController:logout');
 
     $group->get('/usuarios', 'Modulos\System\Controller\UsuarioController:getAll');
     $group->post('/usuarios', 'Modulos\System\Controller\UsuarioController:post');

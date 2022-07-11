@@ -6,7 +6,6 @@ namespace Modulos\System\Controller;
 
 use App\Lib\ResponseTrait;
 use Awurth\SlimValidation\Validator;
-use Exception;
 use Modulos\System\Service\AuthService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -57,6 +56,21 @@ class AuthController
         }
         $data = $request->getParsedBody();
         $data = $this->service->refresh($data['token_refresh']);
+        return $this->withJson($data);
+    }
+
+    public function logout(Request $request, Response $response)
+    {
+        $rules = [
+            'token_id' => V::optional(V::intVal()->min(1)->setName('Token ID')),
+        ];
+        $this->valid->validate($request, $rules);
+        if (!$this->valid->isValid()) {
+            return $this->withJson($this->valid->getErrors(), 400);
+        }
+        $usuario = $request->getAttribute('usuario');
+        $data = $request->getParsedBody();
+        $data = $this->service->logout($usuario, @$data['token_id']);
         return $this->withJson($data);
     }
 }
