@@ -33,6 +33,7 @@ class RefreshTest extends WebTestCase
     }
     private function refresh()
     {
+        sleep(1);
         $this->client->post(
             '/api/auth/refresh',
             ['token_refresh' => $this->info['admin']['token_refresh']]
@@ -40,7 +41,15 @@ class RefreshTest extends WebTestCase
         $data = $this->client->getBodyArray();
         $this->assertEquals(200, $this->client->response->getStatusCode());
         $this->assertEquals(1, count($data));
-        // TODO: token antigo não deve autenticar e token novo deve
+        $this->info['admin']['token_access'] = $data['token_access'];
+    }
+    private function rejectOldToken()
+    {
+        $this->client->get('/api/auth/info');
+        $this->assertEquals(401, $this->client->response->getStatusCode());
+        $this->client->setJwt($this->info['admin']['token_access']);
+        $this->client->get('/api/auth/info');
+        $this->assertEquals(200, $this->client->response->getStatusCode());
     }
     private function refreshMissingParams()
     {
@@ -55,6 +64,7 @@ class RefreshTest extends WebTestCase
         $this->refreshNotAToken();
         $this->refreshInvalidToken();
         $this->refresh();
+        $this->rejectOldToken();
         $this->refreshMissingParams();
     }
 }
