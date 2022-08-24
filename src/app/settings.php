@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 use Monolog\Logger;
 
-return [
+$settings = [
     'settings' => [
-        'db' => [
-            'driver' => @$_ENV['DB_DRIVER'] ?: 'sqlite',
-            'database' => __DIR__ . '/../../' . $_ENV['DB_DATABASE'],
-        ],
         'jwt' => [
             'secret' => $_ENV['JWT_SECRET'],
             'exp_sec_refresh' => 3 * 60 * 60, // 3h
@@ -31,3 +27,22 @@ return [
         ],
     ],
 ];
+
+$isSQLite = !isset($_ENV['DB_DRIVER']) || $_ENV['DB_DRIVER'] == 'sqlite';
+if ($isSQLite) {
+    $settings['settings']['db'] = [
+        'driver' => 'sqlite',
+        'database' => __DIR__ . '/../../' . $_ENV['DB_DATABASE'],
+    ];
+} else {
+    $settings['settings']['db'] = [
+        'driver' => $_ENV['DB_DRIVER'],
+        'database' => $_ENV['DB_DATABASE'],
+        'host' => $_ENV['DB_HOST'],
+        'port' => $_ENV['DB_PORT'],
+        'username' => $_ENV['DB_USER'],
+        'password' => $_ENV['DB_PASS'],
+    ];
+}
+
+return $settings;
