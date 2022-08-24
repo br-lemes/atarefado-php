@@ -1,6 +1,7 @@
 /coverage
 /tmp
 /vendor
-.env
-.phpunit.result.cache
-*.sqlite3
+/.env
+/.phpunit.result.cache
+/*.sqlite3
+/composer.lock
